@@ -88,7 +88,7 @@ int main(){
   lv_disp_remove(disp);
   puts("display removed");
   lv_sdl_quit();
-  puts("quit sql");
+  puts("quit sdl");
   lv_deinit();
   puts("Exiting...");
 
