@@ -2,7 +2,8 @@
 
 This is a simple hello world project for using LVGL on the STM32MPU135F with Yocto and SDL2.  
   
-This program is just a button that changes its text when clicked.
+This program has a button that changes its text when pressed.
+it also includes a sub screen with a dot that moves back and forth on an arc, a message box, a bar that fills if you press the test button, and a button to exit the programm.
 
 # Compiling
 
