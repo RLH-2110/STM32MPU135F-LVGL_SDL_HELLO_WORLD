@@ -13,8 +13,9 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=65d3616852dbf7b1a6d4b53b00626032"
 
 inherit pkgconfig
 
+FILESEXTRAPATHS:prepend := ":${THISDIR}/"
 # No information for SRC_URI yet (only an external source tree was specified)
-SRC_URI = "file:///home/hartung/workdir/layers/meta-st/meta-hartung-software/recipes-example/lvgl_test/lvgl_test/;protocol=file;branch=master"
+SRC_URI = "file://./lvgl_test/;protocol=file;branch=master"
 
 # NOTE: no Makefile found, unable to determine what needs to be done
 
