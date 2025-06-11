@@ -40,6 +40,7 @@ lv_obj_t * arc = NULL;
 bool arc_updates = false;
 bool arc_increase = true;
 int arc_val = 0;
+#define ARC_MAX_RANGE 10
 
 char test_button_text[] = "1. Gedrückt!";
 
@@ -98,7 +99,7 @@ int main(){
 
       if(arc_increase){
         arc_val++;
-        if (arc_val >= 100)
+        if (arc_val >= ARC_MAX_RANGE)
           arc_increase = false;
       }else{
         arc_val--;
@@ -192,9 +193,12 @@ void sub_menu(void)
 
   /* arc */
   arc = lv_arc_create(screen);
+  lv_arc_set_range(arc,0,ARC_MAX_RANGE);
+  lv_arc_set_bg_angles(arc, 225, 315);
+  /* lv_obj_set_width(arc,400); */ /* does not resize the arc */
   lv_obj_remove_style(arc, NULL, LV_PART_INDICATOR);
   lv_obj_remove_flag(arc, LV_OBJ_FLAG_CLICKABLE);
-  lv_obj_align(arc, LV_ALIGN_TOP_MID, 0, 5);
+  lv_obj_align(arc, LV_ALIGN_TOP_MID, 0, 35);
   lv_arc_set_knob_offset(arc,0);
   arc_updates = true;
 
@@ -203,7 +207,7 @@ void sub_menu(void)
   static char const * const button_map[] = { "Back", "MsgBox", "Exit", NULL};
   lv_buttonmatrix_set_map(buttons, button_map);
   lv_obj_add_style(buttons, &german_font_style, 0);
-  lv_obj_align(buttons, LV_ALIGN_BOTTOM_MID,0,-15);
+  lv_obj_align(buttons, LV_ALIGN_BOTTOM_MID,0,-35);
   lv_obj_set_width(buttons, H_RES - 40); /* -40, so we have 20 pixel space on each side of the screen */   
 
   /* for all buttons */
