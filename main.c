@@ -5,7 +5,6 @@
 #include <pthread.h>
 #include <signal.h>
 
-#include "lv_drv_conf.h"
 #include "lvgl/lvgl.h"
 #include "lvgl/src/drivers/sdl/lv_sdl_mouse.h"
 
