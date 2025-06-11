@@ -1,19 +1,37 @@
 include lvgl/lvgl.mk
 
 TARGET := lvgltst 
+
+CURR_DIR = $(shell pwd)
+
 LVGL_SRCFILES := $(ASRCS) $(CSRCS)
+# Convert absolute paths to relative paths under obj/
+LVGL_OBJFILES := $(patsubst $(CURR_DIR)/%.c,obj/%.o,$(filter %.c,$(CSRCS))) \
+                 $(patsubst $(CURR_DIR)/%.S,obj/%.o,$(filter %.S,$(ASRCS)))
 
-SDL	:= $(shell pkg-config --cflags sdl2) $(shell pkg-config --libs sdl2)
+$(info    LVGL_OBJFILES is $(LVGL_OBJFILES))
 
-$(info    SDL is $(SDL))
 
 all: $(TARGET)
 
-$(TARGET): $(LVGL_SRCFILES) main.c 
-	$(CC) $(CFLAGS) $(AFLAGS) $(LDFLAGS) -lSDL2 $^ -o $@ $(SDL)
+$(TARGET): $(LVGL_OBJFILES) obj/main.o 
+	$(CC) $(CFLAGS) $(AFLAGS) $(LDFLAGS) $^ -o $@ $(SDL) -lSDL2 
+
+obj/main.o: main.c
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) -c $^ -o $@ $(SDL) 
+
+obj/%.o: %.c 
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) -c $< -o $@ $(SDL) 
+
+obj/%.o: %.S 
+	@mkdir -p $(@D) 
+	$(CC) $(AFLAGS) -c $< -o $@ $(SDL)
 
 clean:
-	rm $(TARGET)
+	rm -f $(TARGET)
+	rm -rdf obj
 
 .PHONY: all clean 
 
